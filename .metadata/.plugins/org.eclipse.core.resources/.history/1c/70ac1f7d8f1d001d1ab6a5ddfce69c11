@@ -1,0 +1,287 @@
+package ArvoreBinaria;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import ArvoreSimples.InvalidNoException;
+import ArvoreBinaria.No;
+
+public class ArvoreBinaria {
+	//Atributos da �rvore
+	No raiz;
+	int tamanho;
+	Comparador comp = new Comparador();
+	ArrayList<No> order = new ArrayList<No>();
+	//Construtor
+	public ArvoreBinaria(Object o){
+		raiz = new No(null, o);
+		tamanho = 1;
+	}
+	/** Retorna a raiz da �rvore */
+	public No root(){
+	return raiz;
+	}
+	/** Retorna o No pai de um No */
+	public No parent(No v){
+	return (v.parent());
+	}
+	/** retorna os filhos de um No */
+	public Iterator children(No v){
+	return v.children();
+	}
+	/** Testa se um No � interno */
+	public boolean isInternal(No v){
+	return (v.childrenNumber() > 0);
+	
+	}
+	/** Testa se um No � externo*/
+	public boolean isExternal(No v){
+	return (v.childrenNumber() == 0);
+	}
+	/** Testa se um No � a raiz */
+	public boolean isRoot(No v){
+	return v == raiz;
+	}
+	/** Adiciona um filho a um No
+	* @throws InvalidNoException */
+	public void addChild(Object o) throws InvalidNoException{
+	No pai = busca(raiz,o);
+	if(pai!=null) {
+	No novo = new No(pai, o);
+	int x = comp.comparar(o,pai.element());
+	//foreach para verificar repetição
+	if(o==pai.element()) throw new InvalidNoException();
+	if(x>0) {
+	pai.addRight(novo);
+	}else {
+	pai.addLeft(novo);
+	}
+	tamanho++;
+	}
+	}
+	/** Remove um No
+	* S� pode remover Nos externos e que tenham um pai (n�o seja
+	raiz)
+	*/
+	public Object remove(Object e) throws InvalidNoException{
+		Object o = null;
+		No v = busca(raiz,e);
+		No pai = v.parent();
+		int x = comp.comparar(v.element(), pai.element());
+		if (pai != null && isExternal(v)) {
+			if(x<0)
+		
+				pai.removeLeft(v);
+			else
+				pai.removeRight(v);
+			o = v.element();
+		}
+		else if(isInternal(v)) {
+			No first = new No(null,null);
+			if(v.getRight()!=null) {
+				inOrder(v.getRight());
+				first = order.get(0);
+				o = v.element();
+				
+				x=comp.comparar(first.element(),first.parent().element());
+				
+				v.setElement(first.element());
+				if(x<0)
+				first.parent().addLeft(null);
+				if(x>0)
+				first.parent().addRight(null);
+		
+		}
+		order.clear();
+		}
+		else
+		throw new InvalidNoException();
+		tamanho--;
+		return o;
+	}
+	/** Troca dois elementos de posi��o
+	* @throws InvalidNoException */
+	public void swapElements(No v, No w) throws InvalidNoException{
+	int c=0,c2=0;
+	No l=w.getLeft();
+	No r = w.getRight();
+	if(l!=null){
+	c = comp.comparar(v.element(),l.element());
+	}
+	if(r!=null) {
+	c2 = comp.comparar(v.element(),r.element());
+	}
+	if(c<0 || c2>0) {
+	throw new InvalidNoException();
+	
+	}else {
+	Object x = v.element();
+	v.setElement(w.element());
+	w.setElement(x);
+	}
+	}
+	/** Retorna a profundidade de um No */
+	public int depth(No v){
+	int profundidade = profundidade(v);
+	return profundidade;
+	}
+	private int profundidade(No v){
+	if (v == raiz)
+	return 0;
+	else
+	return 1 + profundidade(v.parent());
+	}
+	/** Retorna a altura da �rvore */
+	public int height(No v){
+	// M�todo que serve de exerc�cio
+	if(isExternal(v)) {
+	return 0;
+	}else {
+	int altura = 0;
+	Iterator i = children(v);
+	while(i.hasNext()) {
+	No w = (No) i.next();
+	altura += height(w);
+	}
+	return altura+1;
+	}
+	}
+	/** Retorna um iterator com os elementos armazenados na �rvore */
+	public Iterator elements(){
+	Iterator i = raiz.children();
+	ArrayList<Object> a = new ArrayList();
+	a.add(raiz.element());
+	while(i.hasNext()) {
+	Iterator o = i;
+	
+	while(i.hasNext()) {
+	No n = (No) i.next();
+	a.add(n.element());
+	i = n.children();
+	}
+	i=o;
+	}
+	return a.iterator();
+	}
+	/** Retorna um iterator com as posi��es (Nos) da �rvore */
+	public Iterator Nos(){
+	// M�todo que serve de exerc�cio
+	Iterator i = raiz.children();
+	ArrayList<No> a = new ArrayList();
+	a.add(raiz);
+	while(i.hasNext()) {
+	Iterator o = i;
+	while(i.hasNext()) {
+	No n = (No) i.next();
+	a.add(n);
+	i = n.children();
+	}
+	i=o;
+	}
+	return a.iterator();
+	}
+	/** Retorna o n�mero de Nos da �rvore*/
+	public int size(){
+	return tamanho;
+	}
+	/** Retorna se a �vore est� vazia. Sempre vai ser falso, pois n�o
+	permitimos remover a raiz*/
+	public boolean isEmpty(){
+	return tamanho==0;
+	}
+	public Object replace(No v, Object o){
+	// M�todo que serve de exerc�cio
+	Object x = v.element();
+	v.setElement(o);
+	
+	return x;
+	}
+	public No busca(No v, Object o) {
+	if(v!=null) {
+	int x = comp.comparar( o, v.element());
+	Object y = null;
+	y=v.element();
+	if(isExternal(v)) return v;
+	if(x<0) {
+	if(v.getLeft()==null)
+	return v;
+	return busca(v.getLeft(),o);
+	}
+	else if(o==y) {
+	return v;
+	}
+	else {
+	if(v.getRight()==null)
+	return v;
+	return busca(v.getRight(),o);
+	}
+	}else {
+	return null;
+	}
+	}
+	public void print() {
+		int l=height(raiz);
+		Object tab[][] = new Object[l+1][tamanho+1];
+		ArrayList<No> a = new ArrayList<No>();
+		Iterator it = Nos();
+		while(it.hasNext()) {
+			a.add( (No)it.next());
+		}
+		String s;
+		
+		for(int i=0;i<l;i++) {
+			s="";
+			for(int j=0;j<tamanho+5;j++) {
+				for(No no:a) {
+		
+					int x = comp.comparar(depth(no),i),
+					y = comp.comparar(no.element(),j);
+					if(x==0 && y==0) {
+					s+=no.element();
+					}else {
+						s+=" ";
+					}
+				}
+			}
+			System.out.println(s);
+		}
+	}
+	public void printOrder() {
+		int l=height(raiz);
+		String s;
+		inOrder(root());
+		for(int i=0;i<l;i++) {
+			s="";
+			for(int j=0;j<tamanho+5;j++) {
+				for(No no:order) {
+					int x = comp.comparar(depth(no),i),
+							y = comp.comparar(no.element(),j);
+					if(x==0 && y==0) {
+						s+=no.element();
+					}else {
+						s+=" ";
+					}
+				}
+			}
+			System.out.println(s);
+		}
+		order.clear();
+	}
+	public void inOrder(No v){
+		if(v.getLeft()!=null)
+		inOrder(v.getLeft());
+	
+		if(v!=null)order.add(v);
+	
+		if(v.getRight()!=null)
+		inOrder(v.getRight());
+	}
+	public int nFolhas(No v) {
+		int cont=0;
+		if(isExternal(v)){
+			return cont+=1;
+		}
+		if(v.getLeft()!=null)cont+=nFolhas(v.getLeft());
+		if(v.getRight()!=null)cont+=nFolhas(v.getRight());
+		return cont;
+	}
+}

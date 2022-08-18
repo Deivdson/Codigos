@@ -1,0 +1,6 @@
+package FilaDePrioridade;
+import ArvoreBinaria.ArvoreBinaria;
+
+public class FPNo {
+	
+}

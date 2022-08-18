@@ -1,0 +1,83 @@
+package ArvoreBinaria;
+
+import java.util.Iterator;
+
+public class Main {
+
+	public static void main(String[] args) {
+		ArvoreBinaria v = new ArvoreBinaria(1);
+		v.addChild(v.root(),2);
+		v.addChild(v.root(),3);
+		Iterator x = v.root().children();
+		
+		while(x.hasNext()) {
+			System.out.println(x.next());
+		}
+		
+		Iterator i = v.elements();
+		while(i.hasNext()) {
+			System.out.println(i.next());
+		}
+		
+		System.out.println("------------------------");
+		
+		No raiz = v.root();
+		
+		i = raiz.children();
+		int cont = 4;
+		while(i.hasNext()) {
+			v.addChild((No) i.next(),cont);
+			cont++;
+		}
+		
+		//i = v.elements();
+		i = v.elements();
+		while(i.hasNext()) {
+			System.out.println(i.next()+"-");
+		}
+		
+		System.out.println(v.height(raiz));
+		
+		i = v.Nos();
+		No o = null;
+		while(i.hasNext()) {
+			System.out.println(o=(No) i.next());
+		}
+		
+		System.out.println("----------------------------");
+		
+		v.swapElements(raiz,o);
+		
+		System.out.println(raiz.element()+" - "+o.element());
+		
+		v.replace(raiz,1);
+		
+		System.out.println(raiz.element());
+		
+		
+		No novo = v.busca(raiz,3);
+		i=novo.children();
+		Object e = null,d = null;
+		if(novo.getLeft()!=null) {
+			e = novo.getLeft().element();
+		}
+		if(novo.getRight()!=null) {
+			d = novo.getRight().element();
+		}
+		System.out.println("---------------------------------------" +"\n"
+							
+							+"Elemento do No: "+novo.element() +"\n"
+							+ "Filho Esquerdo: " + e +"\n"
+							+ "Filho Direito: " + d +"\n"
+							+ "---------------------------------------\n"
+				);
+		
+		while(i.hasNext()) {
+			System.out.println("(");
+			System.out.println(((No)i.next()).element());
+		}
+		
+
+	}
+
+}

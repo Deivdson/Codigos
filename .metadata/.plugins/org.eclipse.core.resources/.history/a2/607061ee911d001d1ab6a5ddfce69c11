@@ -1,0 +1,5 @@
+package FilaDePrioridade;
+
+public interface IEntry {
+
+}
