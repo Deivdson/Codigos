@@ -60,17 +60,10 @@ public class FPArray {
 				a[1]= new No(null,o);
 			else {
 				No pai = (No)a[tamanho];
-				if(pai.getLeft()!=null) {
+				if(pai.getLeft()!=null)
 					a[tamanho*2+1]= new No(pai,o);
-					//int x = comp.comparar(pai.element,o);
-					//if(x>0) upHeap(pai.getRight();
-				}
-				else {
-					a[tamanho*2]= new No(pai,o);
-					//int x = comp.comparar(pai.element,o);
-					//if(x>0) upHeap(pai.getLeft();
-				}
-					
+				else
+					a[tamanho*2]= new No(pai,o)
 			}
 			/*
 			No pai = busca(raiz,o);

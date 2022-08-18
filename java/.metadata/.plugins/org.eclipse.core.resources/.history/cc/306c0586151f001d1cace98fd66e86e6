@@ -68,7 +68,7 @@ public class FPArray {
 				else {
 					a[tamanho*2]= new No(pai,o);
 					//int x = comp.comparar(pai.element,o);
-					//if(x>0) upHeap(pai.getLeft();
+					//if(x>0) upHeap(pai.getRight();
 				}
 					
 			}

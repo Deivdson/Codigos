@@ -57,20 +57,9 @@ public class FPArray {
 		 * @throws InvalidNoException */
 		public void addChild(Object o) throws InvalidNoException{
 			if(tamanho==1)
-				a[1]= new No(null,o);
+				a[1]=o;
 			else {
-				No pai = (No)a[tamanho];
-				if(pai.getLeft()!=null) {
-					a[tamanho*2+1]= new No(pai,o);
-					//int x = comp.comparar(pai.element,o);
-					//if(x>0) upHeap(pai.getRight();
-				}
-				else {
-					a[tamanho*2]= new No(pai,o);
-					//int x = comp.comparar(pai.element,o);
-					//if(x>0) upHeap(pai.getLeft();
-				}
-					
+				
 			}
 			/*
 			No pai = busca(raiz,o);

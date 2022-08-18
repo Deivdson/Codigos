@@ -2,5 +2,9 @@
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="Pilha.PilhaArray"/>
     <fullyQualifiedTypeName name="java.util.Vector"/>
+    <fullyQualifiedTypeName name="ArvoreBinaria.No"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="ArvoreBinaria.Comparador"/>
     <fullyQualifiedTypeName name="java.util.Iterator"/>
+    <fullyQualifiedTypeName name="ArvoreSimples.InvalidNoException"/>
 </qualifiedTypeNameHistroy>

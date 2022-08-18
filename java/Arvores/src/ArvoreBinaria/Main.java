@@ -11,7 +11,9 @@ public class Main {
 		v.addChild(6);
 		v.addChild(3);
 		Iterator x = v.root().children();
-	
+		
+		
+		
 		
 		while(x.hasNext()) {
 			System.out.println(x.next());
@@ -62,11 +64,11 @@ public class Main {
 		
 		
 		
-		/*
+		
 		
 		System.out.println("\n_______________________________________________\nPrint Árvore binária:\n");
 		v.print();
-		*/
+		
 		System.out.println("\n_______________________________________________\nPrint Árvore binária inOrder:\n");
 		v.printOrder();
 		
